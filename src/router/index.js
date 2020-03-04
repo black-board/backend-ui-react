@@ -1,0 +1,1 @@
+export { routePublic } from './public';
