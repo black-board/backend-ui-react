@@ -1,8 +1,9 @@
-import React, {Fragment,useState} from 'react';
+import React, { Fragment, useState } from 'react';
 // import logo from './logo.svg';
 // import './App.css';
-import { Route } from 'react-router-dom';
-import { routePublic } from '@bb-backend/router';
+import { Route, useRouteMatch } from 'react-router-dom';
+import { routePublic, routePrivate } from '@bb-backend/router';
+import { DrawerNavbar } from '@bb-backend/components';
 
 export function RoutePublicAdminPage() {
   return (
@@ -18,41 +19,47 @@ export function RoutePrivateAdminPage() {
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
-      setOpen(true);
+    setOpen(true);
   };
 
   const handleDrawerClose = () => {
-      setOpen(false);
+    setOpen(false);
   };
 
   return (
-      <Fragment>
-              {/* <HeaderAdmin onClick={handleDrawerOpen} open={open} />
-              <DrawerLabel onClick={handleDrawerClose} open={open} />
-          
-              {routes.admin.map((route, index) => (
-                  <Route key={index} exact={route.exact} path={route.path} component={route.component} />
-              ))} */}
-         
-      </Fragment>
+    <Fragment>
+      <DrawerNavbar
+        handleDrawerOpen={handleDrawerOpen}
+        handleDrawerClose={handleDrawerClose}
+        open={open}
+        title={window.location.pathname}
+      >
+        {routePrivate.map((route, index) => (
+          <Route key={index} exact={route.exact} path={route.path} component={route.component} />
+        ))}
+      </DrawerNavbar>
+    </Fragment>
   )
 }
 
 function App() {
-  const [auth, setAuth] = useState(false);
+  const [
+    auth,
+    // setAuth
+  ] = useState(true);
 
   return (
     <Fragment>
-            {auth !== true ? (
-                <Fragment>
-                    <RoutePublicAdminPage />
-                </Fragment>
-            ) : (
-                    <Fragment>
-                        <RoutePrivateAdminPage />
-                    </Fragment>
-                )}
+      {auth !== true ? (
+        <Fragment>
+          <RoutePublicAdminPage />
         </Fragment>
+      ) : (
+          <Fragment>
+            <RoutePrivateAdminPage />
+          </Fragment>
+        )}
+    </Fragment>
   );
 }
 

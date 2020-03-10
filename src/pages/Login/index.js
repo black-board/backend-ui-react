@@ -11,13 +11,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Redirect,
-    useHistory
-} from "react-router-dom";
+import { useHistory} from "react-router-dom";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { useLogin } from '@bb-backend/controller';
@@ -25,27 +19,25 @@ import { useStyles } from './styles';
 
 export default function LoginPage() {
     const classes = useStyles();
-    const { username, password, showPassword, pageData, setUsername, setPassword, setShowPassword } = useLogin();
+    const { username, password, showPassword, textComponent, setUsername, setPassword, setShowPassword } = useLogin();
 
     const history = useHistory();
 
     const handleChange = prop => event => {
-        // setValues({ ...values, [prop]: event.target.value });
         switch (prop) {
             case "username":
-                return setUsername(event.target.value);
+                 setUsername(event.target.value)
+                 break;
             case "password":
-                return setPassword(event.target.value);
+                 setPassword(event.target.value);
+                 break;
             default:
                 throw new Error();
         }
     };
 
     const handleClickShowPassword = () => {
-        // setValues({ ...values, showPassword: !values.showPassword });
-
         setShowPassword(!showPassword)
-        
     };
 
     const handleMouseDownPassword = event => {
@@ -53,7 +45,7 @@ export default function LoginPage() {
     };
 
     function goPath() {
-        history.push('/admin/register');
+        history.push('/register');
     }
 
     return (
@@ -99,13 +91,13 @@ export default function LoginPage() {
                 <Paper className={classes.paper}>
                     <center>
                         <div className={classes.titleLoginContainer}>
-                            <Typography variant="h3" component="h3">{pageData.header.text}</Typography>
-                            <Typography variant="h5" component="h5">{pageData.title.text}</Typography>
+                            <Typography variant="h3" component="h3">{textComponent.header.text}</Typography>
+                            <Typography variant="h5" component="h5">{textComponent.title.text}</Typography>
                         </div>
                         <div className={classes.mainLoginContainer}>
                             <div>
                                 <FormControl className={clsx(classes.margin, classes.textField)}>
-                                    <InputLabel htmlFor="standard-adornment-username">{pageData.labal.email.text}</InputLabel>
+                                    <InputLabel htmlFor="standard-adornment-username">{textComponent.labal.email.text}</InputLabel>
                                     <Input
                                         id="standard-adornment-username"
                                         type="text"
@@ -127,7 +119,7 @@ export default function LoginPage() {
                             </div>
                             <div>
                                 <FormControl className={clsx(classes.margin, classes.textField)}>
-                                    <InputLabel htmlFor="standard-adornment-password">{pageData.labal.pass.text}</InputLabel>
+                                    <InputLabel htmlFor="standard-adornment-password">{textComponent.labal.pass.text}</InputLabel>
                                     <Input
                                         id="standard-adornment-password"
                                         type={showPassword ? 'text' : 'password'}
@@ -148,7 +140,7 @@ export default function LoginPage() {
                                 </FormControl>
                             </div>
                             <div>
-                                <Button variant="outlined" size="large" color="primary" className={classes.margin}>{pageData.button.login.text}</Button>
+                                <Button variant="outlined" size="large" color="primary" className={classes.margin}>{textComponent.button.login.text}</Button>
                             </div>
                             <div style={{
                                 display: 'flex',
@@ -158,7 +150,7 @@ export default function LoginPage() {
                                     component="button"
                                     variant="body2"
                                     onClick={goPath}
-                                >{pageData.button.regis.text}</Link>
+                                >{textComponent.button.regis.text}</Link>
                             </div>
                         </div>
                     </center>
